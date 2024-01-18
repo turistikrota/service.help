@@ -1,19 +1,37 @@
 package article
 
-type ListDto struct{}
+type ListDto struct {
+	UUID       string           `json:"uuid" bson:"_id,omitempty"`
+	CategoryID string           `json:"categoryId" bson:"category_id"`
+	Meta       map[Locale]*Meta `json:"meta" bson:"meta"`
+	Order      *int             `json:"order" bson:"order"`
+}
 
-type AdminListDto struct{}
+type AdminListDto struct {
+	*Entity
+}
 
-type AdminDetailDto struct{}
+type AdminDetailDto struct {
+	*Entity
+}
 
 func (e *Entity) ToList() ListDto {
-	return ListDto{}
+	return ListDto{
+		UUID:       e.UUID,
+		CategoryID: e.CategoryID,
+		Meta:       e.Meta,
+		Order:      e.Order,
+	}
 }
 
 func (e *Entity) ToAdminList() AdminListDto {
-	return AdminListDto{}
+	return AdminListDto{
+		Entity: e,
+	}
 }
 
 func (e *Entity) ToAdminDetail() AdminDetailDto {
-	return AdminDetailDto{}
+	return AdminDetailDto{
+		Entity: e,
+	}
 }
