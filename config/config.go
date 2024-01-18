@@ -57,6 +57,11 @@ type TokenSrv struct {
 	Project    string `env:"TOKEN_PROJECT" envDefault:"empty"`
 }
 
+type Nats struct {
+	Url     string   `env:"NATS_URL" envDefault:"nats://localhost:4222"`
+	Streams []string `env:"NATS_STREAMS" envDefault:""`
+}
+
 type Session struct {
 	Topic string `env:"SESSION_TOPIC"`
 }
@@ -74,6 +79,7 @@ type App struct {
 	Http        Http
 	HttpHeaders HttpHeaders
 	I18n        I18n
+	Nats        Nats
 	Session     Session
 	RSA         RSA
 	Redis       Redis
