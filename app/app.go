@@ -16,6 +16,12 @@ type Commands struct {
 	FaqActivate   command.FaqActivateHandler
 	FaqDeactivate command.FaqDeactivateHandler
 	FaqReOrder    command.FaqReOrderHandler
+
+	ArticleCreate     command.ArticleCreateHandler
+	ArticleUpdate     command.ArticleUpdateHandler
+	ArticleActivate   command.ArticleActivateHandler
+	ArticleDeactivate command.ArticleDeactivateHandler
+	ArticleReOrder    command.ArticleReOrderHandler
 }
 
 type Queries struct {
