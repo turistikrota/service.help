@@ -10,6 +10,7 @@ type helpRoles struct {
 	FaqReOrder    string
 	FaqList       string
 	FaqRead       string
+	FaqSuper      string
 
 	CategoryCreate     string
 	CategoryUpdate     string
@@ -18,6 +19,7 @@ type helpRoles struct {
 	CategoryReOrder    string
 	CategoryList       string
 	CategoryRead       string
+	CategorySuper      string
 
 	ArticleCreate     string
 	ArticleUpdate     string
@@ -26,6 +28,9 @@ type helpRoles struct {
 	ArticleReOrder    string
 	ArticleList       string
 	ArticleRead       string
+	ArticleSuper      string
+
+	HelpSuper string
 }
 
 type roles struct {
@@ -43,6 +48,7 @@ var Roles = roles{
 		FaqReOrder:    "help.faq.reorder",
 		FaqList:       "help.faq.list",
 		FaqRead:       "help.faq.read",
+		FaqSuper:      "help.faq.super",
 
 		CategoryCreate:     "help.category.create",
 		CategoryUpdate:     "help.category.update",
@@ -51,6 +57,7 @@ var Roles = roles{
 		CategoryReOrder:    "help.category.reorder",
 		CategoryList:       "help.category.list",
 		CategoryRead:       "help.category.read",
+		CategorySuper:      "help.category.super",
 
 		ArticleCreate:     "help.article.create",
 		ArticleUpdate:     "help.article.update",
@@ -59,5 +66,8 @@ var Roles = roles{
 		ArticleReOrder:    "help.article.reorder",
 		ArticleList:       "help.article.list",
 		ArticleRead:       "help.article.read",
+		ArticleSuper:      "help.article.super",
+
+		HelpSuper: "help.super",
 	},
 }

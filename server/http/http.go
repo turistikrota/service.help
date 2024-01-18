@@ -66,6 +66,9 @@ func (h srv) Listen() error {
 		CreateHandler: func(router fiber.Router) fiber.Router {
 			router.Use(h.cors(), h.deviceUUID())
 
+			admin := router.Group("/admin", h.currentUserAccess(), h.requiredAccess())
+			admin.Post("/faq", h.adminRoute(config.Roles.Help.FaqSuper, config.Roles.Help.FaqCreate), h.wrapWithTimeout(h.FaqCreate))
+
 			router.Get("/faq", h.rateLimit(), h.wrapWithTimeout(h.FaqFilter))
 
 			return router
