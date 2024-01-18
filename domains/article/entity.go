@@ -14,8 +14,9 @@ type Entity struct {
 }
 
 type Meta struct {
-	Title string `json:"title" bson:"title"`
-	Slug  string `json:"slug" bson:"slug"`
+	Title    string `json:"title" bson:"title"`
+	Slug     string `json:"slug" bson:"slug"`
+	Keywords string `json:"keywords" bson:"keywords"`
 }
 
 type Locale string

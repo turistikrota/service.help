@@ -16,6 +16,7 @@ type Meta struct {
 	Title       string `json:"title" bson:"title"`
 	Description string `json:"description" bson:"description"`
 	Slug        string `json:"slug" bson:"slug"`
+	Keywords    string `json:"keywords" bson:"keywords"`
 }
 
 type Locale string
