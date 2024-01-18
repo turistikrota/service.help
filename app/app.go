@@ -22,6 +22,12 @@ type Commands struct {
 	ArticleActivate   command.ArticleActivateHandler
 	ArticleDeactivate command.ArticleDeactivateHandler
 	ArticleReOrder    command.ArticleReOrderHandler
+
+	CategoryCreate     command.CategoryCreateHandler
+	CategoryUpdate     command.CategoryUpdateHandler
+	CategoryActivate   command.CategoryActivateHandler
+	CategoryDeactivate command.CategoryDeactivateHandler
+	CategoryReOrder    command.CategoryReOrderHandler
 }
 
 type Queries struct {

@@ -9,6 +9,7 @@ import (
 	"github.com/turistikrota/service.help/app/query"
 	"github.com/turistikrota/service.help/config"
 	"github.com/turistikrota/service.help/domains/article"
+	"github.com/turistikrota/service.help/domains/category"
 	"github.com/turistikrota/service.help/domains/faq"
 	"github.com/turistikrota/service.shared/db/mongo"
 )
@@ -29,6 +30,9 @@ func NewApplication(cnf Config) app.Application {
 	articleFactory := article.NewFactory()
 	articleRepo := article.NewRepo(cnf.MongoDB.GetCollection(cnf.App.DB.Help.Collection), articleFactory)
 
+	categoryFactory := category.NewFactory()
+	categoryRepo := category.NewRepo(cnf.MongoDB.GetCollection(cnf.App.DB.Category.Collection), categoryFactory)
+
 	return app.Application{
 		Commands: app.Commands{
 			FaqCreate:     command.NewFaqCreateHandler(faqFactory, faqRepo),
@@ -42,6 +46,12 @@ func NewApplication(cnf Config) app.Application {
 			ArticleActivate:   command.NewArticleActivateHandler(articleRepo),
 			ArticleDeactivate: command.NewArticleDeactivateHandler(articleRepo),
 			ArticleReOrder:    command.NewArticleReOrderHandler(articleRepo),
+
+			CategoryCreate:     command.NewCategoryCreateHandler(categoryFactory, categoryRepo),
+			CategoryUpdate:     command.NewCategoryUpdateHandler(categoryFactory, categoryRepo),
+			CategoryActivate:   command.NewCategoryActivateHandler(categoryRepo),
+			CategoryDeactivate: command.NewCategoryDeactivateHandler(categoryRepo),
+			CategoryReOrder:    command.NewCategoryReOrderHandler(categoryRepo),
 		},
 		Queries: app.Queries{
 			FaqFilter: query.NewFaqFilterHandler(faqRepo),
