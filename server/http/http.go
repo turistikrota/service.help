@@ -67,13 +67,32 @@ func (h srv) Listen() error {
 			router.Use(h.cors(), h.deviceUUID())
 
 			admin := router.Group("/admin", h.currentUserAccess(), h.requiredAccess())
+			admin.Get("/faq", h.adminRoute(config.Roles.Help.FaqSuper, config.Roles.Help.FaqList), h.wrapWithTimeout(h.FaqAdminFilter))
+			admin.Get("/faq/:uuid", h.adminRoute(config.Roles.Help.FaqSuper, config.Roles.Help.FaqRead), h.wrapWithTimeout(h.FaqAdminGet))
 			admin.Post("/faq", h.adminRoute(config.Roles.Help.FaqSuper, config.Roles.Help.FaqCreate), h.wrapWithTimeout(h.FaqCreate))
 			admin.Put("/faq/:uuid", h.adminRoute(config.Roles.Help.FaqSuper, config.Roles.Help.FaqUpdate), h.wrapWithTimeout(h.FaqUpdate))
 			admin.Patch("/faq/:uuid/activate", h.adminRoute(config.Roles.Help.FaqSuper, config.Roles.Help.FaqActivate), h.wrapWithTimeout(h.FaqActivate))
 			admin.Patch("/faq/:uuid/deactivate", h.adminRoute(config.Roles.Help.FaqSuper, config.Roles.Help.FaqDeactivate), h.wrapWithTimeout(h.FaqDeactivate))
 			admin.Patch("/faq/:uuid/reorder", h.adminRoute(config.Roles.Help.FaqSuper, config.Roles.Help.FaqReOrder), h.wrapWithTimeout(h.FaqReOrder))
 
+			admin.Get("/article", h.adminRoute(config.Roles.Help.ArticleSuper, config.Roles.Help.ArticleList), h.wrapWithTimeout(h.ArticleAdminFilter))
+			admin.Get("/article/:uuid", h.adminRoute(config.Roles.Help.ArticleSuper, config.Roles.Help.ArticleRead), h.wrapWithTimeout(h.ArticleAdminGet))
+			admin.Post("/article", h.adminRoute(config.Roles.Help.ArticleSuper, config.Roles.Help.ArticleCreate), h.wrapWithTimeout(h.ArticleCreate))
+			admin.Put("/article/:uuid", h.adminRoute(config.Roles.Help.ArticleSuper, config.Roles.Help.ArticleUpdate), h.wrapWithTimeout(h.ArticleUpdate))
+			admin.Patch("/article/:uuid/activate", h.adminRoute(config.Roles.Help.ArticleSuper, config.Roles.Help.ArticleActivate), h.wrapWithTimeout(h.ArticleActivate))
+			admin.Patch("/article/:uuid/deactivate", h.adminRoute(config.Roles.Help.ArticleSuper, config.Roles.Help.ArticleDeactivate), h.wrapWithTimeout(h.ArticleDeactivate))
+			admin.Patch("/article/:uuid/reorder", h.adminRoute(config.Roles.Help.ArticleSuper, config.Roles.Help.ArticleReOrder), h.wrapWithTimeout(h.ArticleReOrder))
+
+			admin.Get("/category", h.adminRoute(config.Roles.Help.CategorySuper, config.Roles.Help.CategoryList), h.wrapWithTimeout(h.CategoryAdminList))
+			admin.Get("/category/:uuid", h.adminRoute(config.Roles.Help.CategorySuper, config.Roles.Help.CategoryRead), h.wrapWithTimeout(h.CategoryAdminGet))
+			admin.Post("/category", h.adminRoute(config.Roles.Help.CategorySuper, config.Roles.Help.CategoryCreate), h.wrapWithTimeout(h.CategoryCreate))
+			admin.Put("/category/:uuid", h.adminRoute(config.Roles.Help.CategorySuper, config.Roles.Help.CategoryUpdate), h.wrapWithTimeout(h.CategoryUpdate))
+			admin.Patch("/category/:uuid/activate", h.adminRoute(config.Roles.Help.CategorySuper, config.Roles.Help.CategoryActivate), h.wrapWithTimeout(h.CategoryActivate))
+			admin.Patch("/category/:uuid/deactivate", h.adminRoute(config.Roles.Help.CategorySuper, config.Roles.Help.CategoryDeactivate), h.wrapWithTimeout(h.CategoryDeactivate))
+			admin.Patch("/category/:uuid/reorder", h.adminRoute(config.Roles.Help.CategorySuper, config.Roles.Help.CategoryReOrder), h.wrapWithTimeout(h.CategoryReOrder))
+
 			router.Get("/faq", h.rateLimit(), h.wrapWithTimeout(h.FaqFilter))
+			router.Get("/", h.rateLimit(), h.wrapWithTimeout(h.ArticleFilter))
 
 			return router
 		},
