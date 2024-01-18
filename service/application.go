@@ -27,7 +27,11 @@ func NewApplication(cnf Config) app.Application {
 
 	return app.Application{
 		Commands: app.Commands{
-			FaqCreate: command.NewFaqCreateHandler(faqFactory, faqRepo),
+			FaqCreate:     command.NewFaqCreateHandler(faqFactory, faqRepo),
+			FaqUpdate:     command.NewFaqUpdateHandler(faqFactory, faqRepo),
+			FaqActivate:   command.NewFaqActivateHandler(faqRepo),
+			FaqDeactivate: command.NewFaqDeactivateHandler(faqRepo),
+			FaqReOrder:    command.NewFaqReOrderHandler(faqRepo),
 		},
 		Queries: app.Queries{
 			FaqFilter: query.NewFaqFilterHandler(faqRepo),

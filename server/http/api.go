@@ -48,3 +48,39 @@ func (h srv) FaqUpdate(ctx *fiber.Ctx) error {
 	}
 	return result.SuccessDetail(Messages.Success.Ok, res)
 }
+
+func (h srv) FaqReOrder(ctx *fiber.Ctx) error {
+	detail := command.DetailCmd{}
+	h.parseParams(ctx, &detail)
+	cmd := command.FaqReOrderCmd{}
+	h.parseBody(ctx, &cmd)
+	cmd.UUID = detail.UUID
+	res, err := h.app.Commands.FaqReOrder(ctx.UserContext(), cmd)
+	if err != nil {
+		l, a := i18n.GetLanguagesInContext(*h.i18n, ctx)
+		return result.Error(h.i18n.TranslateFromError(*err, l, a))
+	}
+	return result.SuccessDetail(Messages.Success.Ok, res)
+}
+
+func (h srv) FaqActivate(ctx *fiber.Ctx) error {
+	cmd := command.FaqActivateCmd{}
+	h.parseParams(ctx, &cmd)
+	res, err := h.app.Commands.FaqActivate(ctx.UserContext(), cmd)
+	if err != nil {
+		l, a := i18n.GetLanguagesInContext(*h.i18n, ctx)
+		return result.Error(h.i18n.TranslateFromError(*err, l, a))
+	}
+	return result.SuccessDetail(Messages.Success.Ok, res)
+}
+
+func (h srv) FaqDeactivate(ctx *fiber.Ctx) error {
+	cmd := command.FaqActivateCmd{}
+	h.parseParams(ctx, &cmd)
+	res, err := h.app.Commands.FaqActivate(ctx.UserContext(), cmd)
+	if err != nil {
+		l, a := i18n.GetLanguagesInContext(*h.i18n, ctx)
+		return result.Error(h.i18n.TranslateFromError(*err, l, a))
+	}
+	return result.SuccessDetail(Messages.Success.Ok, res)
+}

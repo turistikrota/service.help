@@ -11,8 +11,11 @@ type Application struct {
 }
 
 type Commands struct {
-	FaqCreate command.FaqCreateHandler
-	FaqUpdate command.FaqUpdateHandler
+	FaqCreate     command.FaqCreateHandler
+	FaqUpdate     command.FaqUpdateHandler
+	FaqActivate   command.FaqActivateHandler
+	FaqDeactivate command.FaqDeactivateHandler
+	FaqReOrder    command.FaqReOrderHandler
 }
 
 type Queries struct {
