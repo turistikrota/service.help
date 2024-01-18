@@ -75,9 +75,9 @@ func (h srv) FaqActivate(ctx *fiber.Ctx) error {
 }
 
 func (h srv) FaqDeactivate(ctx *fiber.Ctx) error {
-	cmd := command.FaqActivateCmd{}
+	cmd := command.FaqDeactivateCmd{}
 	h.parseParams(ctx, &cmd)
-	res, err := h.app.Commands.FaqActivate(ctx.UserContext(), cmd)
+	res, err := h.app.Commands.FaqDeactivate(ctx.UserContext(), cmd)
 	if err != nil {
 		l, a := i18n.GetLanguagesInContext(*h.i18n, ctx)
 		return result.Error(h.i18n.TranslateFromError(*err, l, a))
