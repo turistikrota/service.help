@@ -10,8 +10,8 @@ import (
 )
 
 type FilterItem struct {
-	Category category.ListDto
-	Articles []article.ListDto
+	Category category.ListDto  `json:"category"`
+	Articles []article.ListDto `json:"articles"`
 }
 
 type ArticleFilterQuery struct {
@@ -37,6 +37,7 @@ func NewArticleFilterHandler(articleRepo article.Repo, categoryRepo category.Rep
 		res := make([]FilterItem, len(categories))
 		for i, v := range categories {
 			res[i].Category = v.ToList()
+			res[i].Articles = make([]article.ListDto, 0)
 			for _, v2 := range articles {
 				if v2.CategoryID == v.UUID {
 					res[i].Articles = append(res[i].Articles, v2.ToList())

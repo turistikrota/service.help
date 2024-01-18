@@ -19,7 +19,7 @@ type AdminCategoryListHandler cqrs.HandlerFunc[AdminCategoryListQuery, *AdminCat
 
 func NewAdminCategoryListHandler(repo category.Repo) AdminCategoryListHandler {
 	return func(ctx context.Context, q AdminCategoryListQuery) (*AdminCategoryListRes, *i18np.Error) {
-		list, err := repo.List(ctx)
+		list, err := repo.ListAdmin(ctx)
 		if err != nil {
 			return nil, err
 		}
