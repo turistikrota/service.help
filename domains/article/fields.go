@@ -6,7 +6,6 @@ type fieldsType struct {
 	Meta       string
 	Order      string
 	IsActive   string
-	IsDeleted  string
 	CreatedAt  string
 	UpdatedAt  string
 }
@@ -23,7 +22,6 @@ var fields = fieldsType{
 	Meta:       "meta",
 	Order:      "order",
 	IsActive:   "is_active",
-	IsDeleted:  "is_deleted",
 	CreatedAt:  "created_at",
 	UpdatedAt:  "updated_at",
 }

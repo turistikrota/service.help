@@ -8,7 +8,6 @@ type Entity struct {
 	Meta       map[Locale]*Meta `json:"meta" bson:"meta" validate:"required,dive"`
 	Order      *int             `json:"order" bson:"order" validate:"required,min=0,max=100"`
 	IsActive   bool             `json:"isActive" bson:"is_active" validate:"required,boolean"`
-	IsDeleted  bool             `json:"isDeleted" bson:"is_deleted" validate:"required,boolean"`
 	CreatedAt  time.Time        `json:"createdAt" bson:"created_at" validate:"required"`
 	UpdatedAt  time.Time        `json:"updatedAt" bson:"updated_at" validate:"required"`
 }
