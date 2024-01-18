@@ -156,12 +156,12 @@ func (r *repo) filterOptions() *options.FindOptions {
 		fields.UpdatedAt: 0,
 		fields.CreatedAt: 0,
 	}).SetSort(bson.M{
-		fields.Order: 1,
+		fields.Order: -1,
 	})
 }
 
 func (r *repo) filterAdminOptions() *options.FindOptions {
 	return options.Find().SetSort(bson.M{
-		fields.Order: 1,
+		fields.Order: -1,
 	})
 }
