@@ -1,4 +1,4 @@
-package category
+package faq
 
 import "time"
 
@@ -13,7 +13,9 @@ type Entity struct {
 }
 
 type Meta struct {
-	Title string `json:"title" bson:"title"`
+	Title       string `json:"title" bson:"title"`
+	Description string `json:"description" bson:"description"`
+	Slug        string `json:"slug" bson:"slug"`
 }
 
 type Locale string
