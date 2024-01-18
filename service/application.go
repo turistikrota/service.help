@@ -54,7 +54,15 @@ func NewApplication(cnf Config) app.Application {
 			CategoryReOrder:    command.NewCategoryReOrderHandler(categoryRepo),
 		},
 		Queries: app.Queries{
-			FaqFilter: query.NewFaqFilterHandler(faqRepo),
+			FaqFilter:     query.NewFaqFilterHandler(faqRepo),
+			ArticleFilter: query.NewArticleFilterHandler(articleRepo, categoryRepo),
+
+			AdminArticleFilter: query.NewAdminArticleFilterHandler(articleRepo),
+			AdminArticleGet:    query.NewAdminArticleGetHandler(articleFactory, articleRepo),
+			AdminCategoryList:  query.NewAdminCategoryListHandler(categoryRepo),
+			AdminCategoryGet:   query.NewAdminCategoryGetHandler(categoryFactory, categoryRepo),
+			AdminFaqFilter:     query.NewAdminFaqFilterHandler(faqRepo),
+			AdminFaqGet:        query.NewAdminFaqGetHandler(faqFactory, faqRepo),
 		},
 	}
 }
