@@ -78,9 +78,9 @@ func (r *repo) GetByID(ctx context.Context, id string) (*Entity, bool, *i18np.Er
 		return nil, false, r.factory.Errors.Failed("get")
 	}
 	if !exist {
-		return nil, false, nil
+		return nil, true, nil
 	}
-	return *e, true, nil
+	return *e, false, nil
 }
 
 func (r *repo) Activate(ctx context.Context, id string) *i18np.Error {

@@ -1,6 +1,8 @@
 package http
 
 import (
+	"net/http"
+
 	"github.com/cilloparch/cillop/middlewares/i18n"
 	"github.com/cilloparch/cillop/result"
 	"github.com/gofiber/fiber/v2"
@@ -47,6 +49,9 @@ func (h srv) FaqAdminGet(ctx *fiber.Ctx) error {
 	if err != nil {
 		l, a := i18n.GetLanguagesInContext(*h.i18n, ctx)
 		return result.Error(h.i18n.TranslateFromError(*err, l, a))
+	}
+	if res == nil {
+		return result.ErrorDetail(Messages.Error.NotFound, map[string]interface{}{}, http.StatusNotFound)
 	}
 	return result.SuccessDetail(Messages.Success.Ok, res.Detail)
 }
@@ -150,6 +155,9 @@ func (h srv) ArticleAdminGet(ctx *fiber.Ctx) error {
 		l, a := i18n.GetLanguagesInContext(*h.i18n, ctx)
 		return result.Error(h.i18n.TranslateFromError(*err, l, a))
 	}
+	if res == nil {
+		return result.ErrorDetail(Messages.Error.NotFound, map[string]interface{}{}, http.StatusNotFound)
+	}
 	return result.SuccessDetail(Messages.Success.Ok, res.Detail)
 }
 
@@ -230,6 +238,9 @@ func (h srv) CategoryAdminGet(ctx *fiber.Ctx) error {
 	if err != nil {
 		l, a := i18n.GetLanguagesInContext(*h.i18n, ctx)
 		return result.Error(h.i18n.TranslateFromError(*err, l, a))
+	}
+	if res == nil {
+		return result.ErrorDetail(Messages.Error.NotFound, map[string]interface{}{}, http.StatusNotFound)
 	}
 	return result.SuccessDetail(Messages.Success.Ok, res.Detail)
 }

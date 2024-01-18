@@ -25,7 +25,7 @@ func NewAdminArticleGetHandler(factory article.Factory, repo article.Repo) Admin
 			return nil, err
 		}
 		if notFound {
-			return nil, factory.Errors.NotFound()
+			return nil, nil
 		}
 		return &AdminArticleGetRes{Detail: res.ToAdminDetail()}, nil
 	}

@@ -25,7 +25,7 @@ func NewAdminFaqGetHandler(factory faq.Factory, repo faq.Repo) AdminFaqGetHandle
 			return nil, err
 		}
 		if notFound {
-			return nil, factory.Errors.NotFound()
+			return nil, nil
 		}
 		return &AdminFaqGetRes{Detail: res.ToAdminDetail()}, nil
 	}

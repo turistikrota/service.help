@@ -25,7 +25,7 @@ func NewAdminCategoryGetHandler(factory category.Factory, repo category.Repo) Ad
 			return nil, err
 		}
 		if notFound {
-			return nil, factory.Errors.NotFound()
+			return nil, nil
 		}
 		return &AdminCategoryGetRes{Detail: res.ToAdminDetail()}, nil
 	}
