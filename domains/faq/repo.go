@@ -17,8 +17,6 @@ type Repo interface {
 	GetByID(ctx context.Context, id string) (*Entity, bool, *i18np.Error)
 	Activate(ctx context.Context, id string) *i18np.Error
 	Deactivate(ctx context.Context, id string) *i18np.Error
-	Delete(ctx context.Context, id string) *i18np.Error
-	Restore(ctx context.Context, id string) *i18np.Error
 	ReOrder(ctx context.Context, id string, order int) *i18np.Error
 	Filter(ctx context.Context, filter FilterEntity) ([]*Entity, *i18np.Error)
 	FilterAdmin(ctx context.Context, filter FilterEntity) ([]*Entity, *i18np.Error)
@@ -95,9 +93,6 @@ func (r *repo) Activate(ctx context.Context, id string) *i18np.Error {
 		fields.IsActive: bson.M{
 			"$ne": true,
 		},
-		fields.IsDeleted: bson.M{
-			"$ne": true,
-		},
 	}
 	update := bson.M{
 		"$set": bson.M{
@@ -116,52 +111,10 @@ func (r *repo) Deactivate(ctx context.Context, id string) *i18np.Error {
 	filter := bson.M{
 		fields.UUID:     uuid,
 		fields.IsActive: true,
-		fields.IsDeleted: bson.M{
-			"$ne": true,
-		},
 	}
 	update := bson.M{
 		"$set": bson.M{
 			fields.IsActive:  false,
-			fields.UpdatedAt: time.Now(),
-		},
-	}
-	return r.helper.UpdateOne(ctx, filter, update)
-}
-
-func (r *repo) Delete(ctx context.Context, id string) *i18np.Error {
-	uuid, err := mongo2.TransformId(id)
-	if err != nil {
-		return r.factory.Errors.InvalidUUID()
-	}
-	filter := bson.M{
-		fields.UUID: uuid,
-		fields.IsDeleted: bson.M{
-			"$ne": true,
-		},
-	}
-	update := bson.M{
-		"$set": bson.M{
-			fields.IsDeleted: true,
-			fields.IsActive:  false,
-			fields.UpdatedAt: time.Now(),
-		},
-	}
-	return r.helper.UpdateOne(ctx, filter, update)
-}
-
-func (r *repo) Restore(ctx context.Context, id string) *i18np.Error {
-	uuid, err := mongo2.TransformId(id)
-	if err != nil {
-		return r.factory.Errors.InvalidUUID()
-	}
-	filter := bson.M{
-		fields.UUID:      uuid,
-		fields.IsDeleted: true,
-	}
-	update := bson.M{
-		"$set": bson.M{
-			fields.IsDeleted: false,
 			fields.UpdatedAt: time.Now(),
 		},
 	}
@@ -188,9 +141,6 @@ func (r *repo) ReOrder(ctx context.Context, id string, order int) *i18np.Error {
 func (r *repo) Filter(ctx context.Context, filter FilterEntity) ([]*Entity, *i18np.Error) {
 	filters := r.filterToBson(filter, bson.M{
 		fields.IsActive: true,
-		fields.IsDeleted: bson.M{
-			"$ne": true,
-		},
 	})
 	return r.helper.GetListFilter(ctx, filters, r.filterOptions())
 }
@@ -202,7 +152,6 @@ func (r *repo) FilterAdmin(ctx context.Context, filter FilterEntity) ([]*Entity,
 
 func (r *repo) filterOptions() *options.FindOptions {
 	return options.Find().SetProjection(bson.M{
-		fields.IsDeleted: 0,
 		fields.IsActive:  0,
 		fields.UpdatedAt: 0,
 		fields.CreatedAt: 0,
