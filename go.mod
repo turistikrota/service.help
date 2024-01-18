@@ -1,10 +1,11 @@
 module github.com/turistikrota/service.help
 
-go 1.21.5
+go 1.20
 
 require (
 	github.com/cilloparch/cillop v0.0.9
 	github.com/gofiber/fiber/v2 v2.48.0
+	github.com/ssibrahimbas/slug v0.0.0-20230331230816-02d7d0a3cbee
 	github.com/turistikrota/service.shared v0.1.4
 	go.mongodb.org/mongo-driver v1.13.1
 )

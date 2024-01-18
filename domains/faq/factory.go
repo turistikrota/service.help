@@ -1,6 +1,10 @@
 package faq
 
-import "time"
+import (
+	"time"
+
+	"github.com/ssibrahimbas/slug"
+)
 
 type Factory struct {
 	Errors Errors
@@ -24,6 +28,8 @@ type NewConfig struct {
 func (f Factory) New(cnf NewConfig) *Entity {
 	order := 0
 	t := time.Now()
+	cnf.TrMeta.Slug = slug.New(cnf.TrMeta.Title, slug.TR)
+	cnf.EnMeta.Slug = slug.New(cnf.EnMeta.Title, slug.EN)
 	meta := map[Locale]*Meta{
 		LocaleTR: cnf.TrMeta,
 		LocaleEN: cnf.EnMeta,

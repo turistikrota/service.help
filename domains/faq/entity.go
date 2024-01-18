@@ -12,10 +12,10 @@ type Entity struct {
 }
 
 type Meta struct {
-	Title       string `json:"title" bson:"title"`
-	Description string `json:"description" bson:"description"`
-	Slug        string `json:"slug" bson:"slug"`
-	Keywords    string `json:"keywords" bson:"keywords"`
+	Title       string `json:"title" bson:"title" validate:"required,min=3,max=255"`
+	Description string `json:"description" bson:"description" validate:"required,min=3,max=255"`
+	Slug        string `json:"slug" bson:"slug" validate:"omitempty"`
+	Keywords    string `json:"keywords" bson:"keywords" validate:"required,min=3,max=255"`
 }
 
 type Locale string
