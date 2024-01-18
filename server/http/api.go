@@ -21,7 +21,7 @@ func (h srv) FaqFilter(ctx *fiber.Ctx) error {
 	if err != nil {
 		return result.Error(h.i18n.TranslateFromError(*err, l, a))
 	}
-	return result.SuccessDetail(Messages.Success.Ok, res)
+	return result.SuccessDetail(Messages.Success.Ok, res.List)
 }
 
 func (h srv) FaqCreate(ctx *fiber.Ctx) error {
