@@ -12,7 +12,7 @@ type Entity struct {
 }
 
 type Meta struct {
-	Title string `json:"title" bson:"title"`
+	Title string `json:"title" bson:"title" validate:"required,max=100"`
 }
 
 type Locale string

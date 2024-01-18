@@ -1,5 +1,7 @@
 package category
 
+import "time"
+
 type Factory struct {
 	Errors Errors
 }
@@ -14,8 +16,23 @@ func (f Factory) IsZero() bool {
 	return f.Errors == nil
 }
 
-type NewConfig struct{}
+type NewConfig struct {
+	EnMeta *Meta
+	TrMeta *Meta
+}
 
 func (f Factory) New(cnf NewConfig) *Entity {
-	return &Entity{}
+	order := 0
+	meta := map[Locale]*Meta{
+		LocaleEN: cnf.EnMeta,
+		LocaleTR: cnf.TrMeta,
+	}
+	t := time.Now()
+	return &Entity{
+		Meta:      meta,
+		Order:     &order,
+		IsActive:  true,
+		CreatedAt: t,
+		UpdatedAt: t,
+	}
 }
