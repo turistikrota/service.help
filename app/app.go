@@ -12,6 +12,7 @@ type Application struct {
 
 type Commands struct {
 	FaqCreate command.FaqCreateHandler
+	FaqUpdate command.FaqUpdateHandler
 }
 
 type Queries struct {

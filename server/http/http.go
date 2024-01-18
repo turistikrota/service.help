@@ -68,6 +68,7 @@ func (h srv) Listen() error {
 
 			admin := router.Group("/admin", h.currentUserAccess(), h.requiredAccess())
 			admin.Post("/faq", h.adminRoute(config.Roles.Help.FaqSuper, config.Roles.Help.FaqCreate), h.wrapWithTimeout(h.FaqCreate))
+			admin.Put("/faq/:uuid", h.adminRoute(config.Roles.Help.FaqSuper, config.Roles.Help.FaqUpdate), h.wrapWithTimeout(h.FaqUpdate))
 
 			router.Get("/faq", h.rateLimit(), h.wrapWithTimeout(h.FaqFilter))
 
