@@ -132,6 +132,21 @@ func (h srv) ArticleFilter(ctx *fiber.Ctx) error {
 	return result.SuccessDetail(Messages.Success.Ok, res.List)
 }
 
+func (h srv) ArticleGet(ctx *fiber.Ctx) error {
+	query := query.ArticleGetQuery{}
+	h.parseParams(ctx, &query)
+	l, a := i18n.GetLanguagesInContext(*h.i18n, ctx)
+	query.Locale = l
+	res, err := h.app.Queries.ArticleGet(ctx.UserContext(), query)
+	if err != nil {
+		return result.Error(h.i18n.TranslateFromError(*err, l, a))
+	}
+	if res == nil {
+		return result.ErrorDetail(Messages.Error.NotFound, map[string]interface{}{}, http.StatusNotFound)
+	}
+	return result.SuccessDetail(Messages.Success.Ok, res.Detail)
+}
+
 func (h srv) ArticleAdminFilter(ctx *fiber.Ctx) error {
 	filter := article.FilterEntity{}
 	h.parseQuery(ctx, &filter)

@@ -16,6 +16,7 @@ type Repo interface {
 	Create(ctx context.Context, entity *Entity) (*Entity, *i18np.Error)
 	Update(ctx context.Context, entity *Entity) *i18np.Error
 	GetByID(ctx context.Context, id string) (*Entity, bool, *i18np.Error)
+	GetBySlug(ctx context.Context, locale string, slug string) (*Entity, bool, *i18np.Error)
 	Activate(ctx context.Context, id string) *i18np.Error
 	Deactivate(ctx context.Context, id string) *i18np.Error
 	ReOrder(ctx context.Context, id string, order int) *i18np.Error
@@ -74,6 +75,20 @@ func (r *repo) GetByID(ctx context.Context, id string) (*Entity, bool, *i18np.Er
 	}
 	filter := bson.M{
 		fields.UUID: uuid,
+	}
+	e, exist, err := r.helper.GetFilter(ctx, filter)
+	if err != nil {
+		return nil, false, r.factory.Errors.Failed("get")
+	}
+	if !exist {
+		return nil, true, nil
+	}
+	return *e, false, nil
+}
+
+func (r *repo) GetBySlug(ctx context.Context, locale string, slug string) (*Entity, bool, *i18np.Error) {
+	filter := bson.M{
+		metaField(locale, metaFields.Slug): slug,
 	}
 	e, exist, err := r.helper.GetFilter(ctx, filter)
 	if err != nil {

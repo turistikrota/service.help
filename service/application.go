@@ -56,6 +56,7 @@ func NewApplication(cnf Config) app.Application {
 		Queries: app.Queries{
 			FaqFilter:     query.NewFaqFilterHandler(faqRepo),
 			ArticleFilter: query.NewArticleFilterHandler(articleRepo, categoryRepo),
+			ArticleGet:    query.NewArticleGetHandler(articleRepo),
 
 			AdminArticleFilter: query.NewAdminArticleFilterHandler(articleRepo),
 			AdminArticleGet:    query.NewAdminArticleGetHandler(articleFactory, articleRepo),

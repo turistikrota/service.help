@@ -7,6 +7,12 @@ type ListDto struct {
 	Order      *int             `json:"order" bson:"order"`
 }
 
+type DetailDto struct {
+	UUID       string           `json:"uuid" bson:"_id,omitempty"`
+	CategoryID string           `json:"categoryId" bson:"category_id"`
+	Meta       map[Locale]*Meta `json:"meta" bson:"meta"`
+}
+
 type AdminListDto struct {
 	*Entity
 }
@@ -33,5 +39,13 @@ func (e *Entity) ToAdminList() AdminListDto {
 func (e *Entity) ToAdminDetail() AdminDetailDto {
 	return AdminDetailDto{
 		Entity: e,
+	}
+}
+
+func (e *Entity) ToDetail() DetailDto {
+	return DetailDto{
+		UUID:       e.UUID,
+		CategoryID: e.CategoryID,
+		Meta:       e.Meta,
 	}
 }

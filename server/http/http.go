@@ -93,6 +93,7 @@ func (h srv) Listen() error {
 
 			router.Get("/faq", h.rateLimit(), h.wrapWithTimeout(h.FaqFilter))
 			router.Get("/", h.rateLimit(), h.wrapWithTimeout(h.ArticleFilter))
+			router.Get("/:slug", h.rateLimit(), h.wrapWithTimeout(h.ArticleGet))
 
 			return router
 		},

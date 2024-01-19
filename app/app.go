@@ -33,6 +33,7 @@ type Commands struct {
 type Queries struct {
 	FaqFilter     query.FaqFilterHandler
 	ArticleFilter query.ArticleFilterHandler
+	ArticleGet    query.ArticleGetHandler
 
 	AdminArticleFilter query.AdminArticleFilterHandler
 	AdminArticleGet    query.AdminArticleGetHandler
