@@ -20,7 +20,7 @@ type AdminFaqFilterHandler cqrs.HandlerFunc[AdminFaqFilterQuery, *AdminFaqFilter
 
 func NewAdminFaqFilterHandler(repo faq.Repo) AdminFaqFilterHandler {
 	return func(ctx context.Context, q AdminFaqFilterQuery) (*AdminFaqFilterRes, *i18np.Error) {
-		list, err := repo.Filter(ctx, *q.FilterEntity)
+		list, err := repo.FilterAdmin(ctx, *q.FilterEntity)
 		if err != nil {
 			return nil, err
 		}
