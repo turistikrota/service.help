@@ -17,19 +17,23 @@ type FaqCreateCmd struct {
 	Meta *FaqMetaReq `json:"meta" validate:"required,dive"`
 }
 
-type FaqCreateRes struct{}
+type FaqCreateRes struct {
+	UUID string `json:"uuid"`
+}
 
 type FaqCreateHandler cqrs.HandlerFunc[FaqCreateCmd, *FaqCreateRes]
 
 func NewFaqCreateHandler(factory faq.Factory, repo faq.Repo) FaqCreateHandler {
 	return func(ctx context.Context, fcc FaqCreateCmd) (*FaqCreateRes, *i18np.Error) {
-		err := repo.Create(ctx, factory.New(faq.NewConfig{
+		res, err := repo.Create(ctx, factory.New(faq.NewConfig{
 			TrMeta: fcc.Meta.TR,
 			EnMeta: fcc.Meta.EN,
 		}))
 		if err != nil {
 			return nil, err
 		}
-		return &FaqCreateRes{}, nil
+		return &FaqCreateRes{
+			UUID: res.UUID,
+		}, nil
 	}
 }

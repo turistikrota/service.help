@@ -17,19 +17,23 @@ type CategoryCreateCmd struct {
 	Meta *CategoryMetaReq `json:"meta" validate:"required,dive"`
 }
 
-type CategoryCreateRes struct{}
+type CategoryCreateRes struct {
+	UUID string `json:"uuid"`
+}
 
 type CategoryCreateHandler cqrs.HandlerFunc[CategoryCreateCmd, *CategoryCreateRes]
 
 func NewCategoryCreateHandler(factory category.Factory, repo category.Repo) CategoryCreateHandler {
 	return func(ctx context.Context, acc CategoryCreateCmd) (*CategoryCreateRes, *i18np.Error) {
-		err := repo.Create(ctx, factory.New(category.NewConfig{
+		res, err := repo.Create(ctx, factory.New(category.NewConfig{
 			TrMeta: acc.Meta.TR,
 			EnMeta: acc.Meta.EN,
 		}))
 		if err != nil {
 			return nil, err
 		}
-		return &CategoryCreateRes{}, nil
+		return &CategoryCreateRes{
+			UUID: res.UUID,
+		}, nil
 	}
 }

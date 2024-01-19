@@ -7,12 +7,13 @@ import (
 	"github.com/cilloparch/cillop/i18np"
 	mongo2 "github.com/turistikrota/service.shared/db/mongo"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 type Repo interface {
-	Create(ctx context.Context, entity *Entity) *i18np.Error
+	Create(ctx context.Context, entity *Entity) (*Entity, *i18np.Error)
 	Update(ctx context.Context, entity *Entity) *i18np.Error
 	GetByID(ctx context.Context, id string) (*Entity, bool, *i18np.Error)
 	Activate(ctx context.Context, id string) *i18np.Error
@@ -40,12 +41,13 @@ func createEntity() **Entity {
 	return new(*Entity)
 }
 
-func (r *repo) Create(ctx context.Context, e *Entity) *i18np.Error {
-	_, err := r.collection.InsertOne(ctx, e)
+func (r *repo) Create(ctx context.Context, e *Entity) (*Entity, *i18np.Error) {
+	res, err := r.collection.InsertOne(ctx, e)
 	if err != nil {
-		return r.factory.Errors.Failed("create")
+		return nil, r.factory.Errors.Failed("create")
 	}
-	return nil
+	e.UUID = res.InsertedID.(primitive.ObjectID).Hex()
+	return e, nil
 }
 
 func (r *repo) Update(ctx context.Context, e *Entity) *i18np.Error {

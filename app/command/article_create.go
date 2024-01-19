@@ -18,13 +18,15 @@ type ArticleCreateCmd struct {
 	Meta       *ArticleMetaReq `json:"meta" validate:"required,dive"`
 }
 
-type ArticleCreateRes struct{}
+type ArticleCreateRes struct {
+	UUID string `json:"uuid"`
+}
 
 type ArticleCreateHandler cqrs.HandlerFunc[ArticleCreateCmd, *ArticleCreateRes]
 
 func NewArticleCreateHandler(factory article.Factory, repo article.Repo) ArticleCreateHandler {
 	return func(ctx context.Context, acc ArticleCreateCmd) (*ArticleCreateRes, *i18np.Error) {
-		err := repo.Create(ctx, factory.New(article.NewConfig{
+		res, err := repo.Create(ctx, factory.New(article.NewConfig{
 			TrMeta:     acc.Meta.TR,
 			EnMeta:     acc.Meta.EN,
 			CategoryID: acc.CategoryID,
@@ -32,6 +34,8 @@ func NewArticleCreateHandler(factory article.Factory, repo article.Repo) Article
 		if err != nil {
 			return nil, err
 		}
-		return &ArticleCreateRes{}, nil
+		return &ArticleCreateRes{
+			UUID: res.UUID,
+		}, nil
 	}
 }
